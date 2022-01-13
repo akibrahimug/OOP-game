@@ -6,9 +6,8 @@ class Phrase {
     }
 
     addPhraseToDisplay(){
-        // Assign the container div for the listItem to the varaible 'ul'
-        const ul = document.querySelector('#phrase ul');
-
+// Assign the container div for the listItem to the varaible 'ul'
+const ul = document.querySelector('#phrase ul');
         // Iterate through the phrase getting each letter and space
         this.phrase.forEach(letter => {
             // For each letter or space, create a new li
@@ -42,7 +41,6 @@ class Phrase {
     }
 
     showMatchedLetter(letter){
-
         // If phrase contains a letter
         if(this.checkLetter(letter)){
             // Assign all the listItems on the page to the variable 'phraseLetters'
@@ -65,7 +63,16 @@ class Phrase {
                 }
             })
         }else{
-            console.log('none')
+            game.removeLife()
         }
+    }
+
+    resetPhrase(){
+        
+        const phrases = phrase.querySelectorAll('li');
+        phrases.forEach(p => {
+            p.classList.remove('show');
+            p.classList.add('hide')
+        })    
     }
 }

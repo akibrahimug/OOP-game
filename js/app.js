@@ -4,22 +4,18 @@
 
 
 const game = new Game();
-const keyboard = document.querySelectorAll('.key')
+const keyboard = document.querySelectorAll('.key');
+const overlay = document.querySelector('#overlay');
+const h1 = overlay.querySelector('#game-over-message');
+const liveHearts = document.querySelectorAll('.tries img');
+
 
 const startBtn = document.querySelector('#btn__reset')
 startBtn.addEventListener('click', e => {
     game.startGame();
-    keyboard.forEach(key => {
-        key.addEventListener('click', e => {
-            new Phrase().showMatchedLetter(key.textContent);
-            game.checkForWin()
-        })
-        
-    })
+    game.handleInteraction()
+    
     // console.log(new Phrase().showMatchedLetter('a'))
-    console.log()
-    
-    
 })
 
 
