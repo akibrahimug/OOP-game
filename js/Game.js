@@ -35,6 +35,7 @@ class Game {
         overlay.style.display = 'none'
 
         this.activePhrase;
+        
     }
 
     handleInteraction(){
@@ -42,11 +43,11 @@ class Game {
         keyboard.forEach(key => {
             key.addEventListener('click', e => {
                 new Phrase().showMatchedLetter(key.textContent);
-                game.checkForWin()
+                // game.checkForWin()
                 if(new Phrase().checkLetter(key.textContent) === false){
                     key.setAttribute('disabled', 'disabled')
                     key.classList.add('wrong')
-                    
+                    this.removeLife()
                 }else{
                     key.classList.add('chosen')
                 }
@@ -61,23 +62,26 @@ class Game {
         const count = this.activePhrase.children.length - spaces.length
         const show = this.activePhrase.querySelectorAll('.show')
         
-        if(show.length === count && this.missed < 5){
+        if(show.length === count && this.missed < liveHearts.length){
             this.gameOver('win', 'Great Job');
-            this.resetBtn(keyboard);
-            new Phrase().resetPhrase(this.activePhrase)
-        }else if(show.length !== count && this.missed >= 5){
+            console.log(this.missed)
+        }else if(show.length !== count && this.missed >= liveHearts.length){
             this.gameOver('lose', 'Sorry, better luck next time');
-            this.resetBtn(keyboard);
-            new Phrase().resetPhrase(this.activePhrase)
+            console.log(this.missed)
         }
     }
 
     removeLife(){
         
-        this.missed < liveHearts.length;
-        liveHearts[this.missed].src = 'images/lostHeart.png';
-        this.missed ++;
+        while(this.missed < liveHearts.length){
+            liveHearts[this.missed].src = 'images/lostHeart.png';
+            this.missed ++;
+        }
         
+        
+        this.checkForWin()
+        
+        console.log(this.missed)
     }
 
     gameOver(gameWon, text){
@@ -89,22 +93,30 @@ class Game {
         
     }
 
-    resetBtn(button){
-        button.forEach(b => {
-            b.classList.remove('wrong');
-            b.classList.remove('chosen');
-            b.removeAttribute('disabled')
+
+    resetGame(){
+        this.resetBtn()
+        // this.resetLiveHearts()
+        new Phrase().resetPhrase(this.activePhrase)
+    }
+
+    resetBtn(){
+       keyboard.forEach(key => {
+            key.classList.remove('wrong');
+            key.classList.remove('chosen');
+            key.removeAttribute('disabled')
         })
-        this.resetLiveHearts()
     }
 
     resetLiveHearts(){
-        liveHearts.forEach(liveHeart => {
-            liveHeart.src = 'images/liveHeart.png'
+
+            liveHearts.forEach(live =>{
+                live.src = 'images/liveHeart.png';
+            
+       this.missed = 0
+       console.log(this.missed)
+    //    console.log(liveHearts.length)
         })
-        if(this.missed === 5){
-            this.missed -= 5
-        }
     }
 
 }

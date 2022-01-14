@@ -13,8 +13,8 @@ const liveHearts = document.querySelectorAll('.tries img');
 const startBtn = document.querySelector('#btn__reset')
 startBtn.addEventListener('click', e => {
     game.startGame();
-    game.handleInteraction()
-    
+    game.handleInteraction();
+    game.resetGame()
     // console.log(new Phrase().showMatchedLetter('a'))
 })
 
