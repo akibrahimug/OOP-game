@@ -62,25 +62,21 @@ class Game {
         const count = this.activePhrase.children.length - spaces.length
         const show = this.activePhrase.querySelectorAll('.show')
         
-        if(show.length === count && this.missed < liveHearts.length){
+        if(show.length === count && this.missed < 5){
             this.gameOver('win', 'Great Job');
-            console.log(this.missed)
-        }else if(show.length !== count && this.missed >= liveHearts.length){
+        }else if(show.length !== count && this.missed >= 5){
             this.gameOver('lose', 'Sorry, better luck next time');
-            console.log(this.missed)
         }
     }
 
     removeLife(){
         
-        while(this.missed < liveHearts.length){
-            liveHearts[this.missed].src = 'images/lostHeart.png';
-            this.missed ++;
-        }
-        
+        this.missed < liveHearts.length;
+        liveHearts[this.missed].src = 'images/lostHeart.png';
+        this.missed ++;
         
         this.checkForWin()
-        
+        this.resetLiveHearts()
         console.log(this.missed)
     }
 
@@ -109,14 +105,15 @@ class Game {
     }
 
     resetLiveHearts(){
-
+   
+        if(this.missed >= 5){
             liveHearts.forEach(live =>{
                 live.src = 'images/liveHeart.png';
-            
+            })
        this.missed = 0
        console.log(this.missed)
     //    console.log(liveHearts.length)
-        })
+        }
     }
 
 }
