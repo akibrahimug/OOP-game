@@ -99,6 +99,7 @@ const ul = document.querySelector('#phrase ul');
 
             // Add the 'hide' class
             p.classList.add('hide');
-        })    
+        }) 
+        
     }
 }

@@ -6,7 +6,7 @@ class Game {
     constructor(){
         this.missed = 0
         this.phrases = this.createPhrases()
-        this.activePhrase = new Phrase(this.getRandomPhrase()).addPhraseToDisplay()
+        this.activePhrase = null
     }
 /**
  * Create phrases for the game
@@ -34,25 +34,20 @@ class Game {
         
         overlay.style.display = 'none'
 
-        this.activePhrase;
-        
+        this.activePhrase = new Phrase(this.getRandomPhrase()).addPhraseToDisplay();
     }
 
-    handleInteraction(){
-
-        keyboard.forEach(key => {
-            key.addEventListener('click', e => {
-                new Phrase().showMatchedLetter(key.textContent);
-                // game.checkForWin()
-                if(new Phrase().checkLetter(key.textContent) === false){
-                    key.setAttribute('disabled', 'disabled')
-                    key.classList.add('wrong')
-                    this.removeLife()
-                }else{
-                    key.classList.add('chosen')
-                }
-            })
-        })
+    handleInteraction(key){
+        if(new Phrase().checkLetter(key.textContent) === false){
+            key.setAttribute('disabled', 'disabled')
+            key.classList.add('wrong')
+            this.removeLife()
+        }else{
+            key.classList.add('chosen');
+            new Phrase().showMatchedLetter(key.textContent);
+            this.checkForWin();
+        }
+        
     }
 
 
@@ -64,36 +59,37 @@ class Game {
         
         if(show.length === count && this.missed < 5){
             this.gameOver('win', 'Great Job');
-        }else if(show.length !== count && this.missed >= 5){
-            this.gameOver('lose', 'Sorry, better luck next time');
         }
     }
 
     removeLife(){
-        
         this.missed < liveHearts.length;
         liveHearts[this.missed].src = 'images/lostHeart.png';
         this.missed ++;
-        
-        this.checkForWin()
-        this.resetLiveHearts()
-        console.log(this.missed)
+
+        if(this.activePhrase.querySelectorAll('.show').length 
+            !== this.activePhrase.children.length - this.activePhrase.querySelectorAll('.space').length 
+            && this.missed >= 5)
+            {
+            this.gameOver('lose', 'Sorry, better luck next time');
+        }
     }
 
     gameOver(gameWon, text){
-        overlay.classList.remove('start')
-        overlay.classList.add(gameWon)
+        overlay.classList.replace('start', gameWon)
         overlay.style.display = 'block';
 
         h1.textContent = text;
-        
+        this.resetGame()
     }
 
 
     resetGame(){
         this.resetBtn()
-        // this.resetLiveHearts()
-        new Phrase().resetPhrase(this.activePhrase)
+        this.resetLiveHearts()
+        new Phrase().resetPhrase()
+        this.activePhrase = ''
+        
     }
 
     resetBtn(){
@@ -111,8 +107,6 @@ class Game {
                 live.src = 'images/liveHeart.png';
             })
        this.missed = 0
-       console.log(this.missed)
-    //    console.log(liveHearts.length)
         }
     }
 

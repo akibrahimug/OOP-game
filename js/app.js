@@ -3,7 +3,7 @@
  * app.js */
 
 
-const game = new Game();
+
 const keyboard = document.querySelectorAll('.key');
 const overlay = document.querySelector('#overlay');
 const h1 = overlay.querySelector('#game-over-message');
@@ -12,10 +12,13 @@ const liveHearts = document.querySelectorAll('.tries img');
 
 const startBtn = document.querySelector('#btn__reset')
 startBtn.addEventListener('click', e => {
+    const game = new Game();
     game.startGame();
-    game.handleInteraction();
-    game.resetGame()
-    // console.log(new Phrase().showMatchedLetter('a'))
+    keyboard.forEach(button => {
+        button.addEventListener('click', e => {
+            game.handleInteraction(button);
+        })
+    })
 })
 
 
