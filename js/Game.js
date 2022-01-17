@@ -88,7 +88,7 @@ class Game {
         this.resetBtn()
         this.resetLiveHearts()
         new Phrase().resetPhrase()
-        this.activePhrase = ''
+       
         
     }
 
