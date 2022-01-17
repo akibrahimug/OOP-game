@@ -87,19 +87,10 @@ const ul = document.querySelector('#phrase ul');
 
     // Reset the phrase to hidden after the game is over
     resetPhrase(){
-
         // Select all the current letters in the phrase
         const phrases = phrase.querySelectorAll('li');
-
         // Iterate through the array
-        phrases.forEach(p => {
-
-            // reomve the 'show' class
-            p.classList.remove('show');
-
-            // Add the 'hide' class
-            p.classList.add('hide');
-        }) 
+        phrases.forEach(p => p.remove()) 
         
     }
 }
