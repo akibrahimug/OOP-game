@@ -3,7 +3,8 @@
  * app.js */
 
 
-
+// Assign the container div for the listItem to the varaible 'ul'
+const ul = document.querySelector('#phrase ul');
 const keyboard = document.querySelectorAll('.key');
 const overlay = document.querySelector('#overlay');
 const h1 = overlay.querySelector('#game-over-message');

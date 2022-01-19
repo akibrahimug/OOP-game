@@ -14,12 +14,12 @@ class Game {
  */
     createPhrases(){
         return [
-            'once in a blue moon',
-            'when pigs fly',
-            'the brains behind',
-            'happy wife happy life',
-            'let the cat out of the bag'
-        ]
+            new Phrase ('once in a blue moon'),
+            new Phrase ('when pigs fly'),
+            new Phrase ('the brains behind'),
+            new Phrase ('happy wife happy life'),
+            new Phrase ('let the cat out of the bag')
+        ];
     }
 /**
  * Selects random phrase from phrases property
@@ -27,67 +27,72 @@ class Game {
  */
     getRandomPhrase(){
         const random = Math.floor(Math.random()*this.phrases.length);
-        return this.phrases[random].split('');
+        return this.phrases[random];
     }
 
     startGame(){
         
-        overlay.style.display = 'none'
-
-        this.activePhrase = new Phrase(this.getRandomPhrase()).addPhraseToDisplay();
+        overlay.style.display = 'none';
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
     }
 
     handleInteraction(key){
-        if(new Phrase().checkLetter(key.textContent) === false){
+        if(this.activePhrase.checkLetter(key.textContent) === false){
             key.setAttribute('disabled', 'disabled')
             key.classList.add('wrong')
             this.removeLife()
         }else{
             key.classList.add('chosen');
-            new Phrase().showMatchedLetter(key.textContent);
-            this.checkForWin();
+            this.activePhrase.showMatchedLetter(key.textContent);
+            if(this.checkForWin()){
+                this.gameOver();
+            }
         }
         
     }
 
 
     checkForWin(){
-        // const letters = this.activePhrase.querySelectorAll('.letter');
-        const spaces = this.activePhrase.querySelectorAll('.space');
-        const count = this.activePhrase.children.length - spaces.length
-        const show = this.activePhrase.querySelectorAll('.show')
+        const letters = document.querySelectorAll('.letter');
+        const show = document.querySelectorAll('.show')
         
-        if(show.length === count && this.missed < 5){
-            this.gameOver('win', 'Great Job');
+        if(show.length === letters.length){
+            return true;
+        }else{
+            return false;
         }
     }
 
     removeLife(){
-        this.missed < liveHearts.length;
+
         liveHearts[this.missed].src = 'images/lostHeart.png';
         this.missed ++;
 
-        if(this.activePhrase.querySelectorAll('.show').length 
-            !== this.activePhrase.children.length - this.activePhrase.querySelectorAll('.space').length 
-            && this.missed >= 5)
-            {
-            this.gameOver('lose', 'Sorry, better luck next time');
+        if(this.missed > 4){
+            this.gameOver();
         }
     }
 
-    gameOver(gameWon, text){
-        overlay.classList.replace('start', gameWon)
-        overlay.style.display = 'block';
-
-        h1.textContent = text;
-        this.resetGame()
+    gameOver(){
+        if(this.checkForWin()){
+            overlay.style.display = 'flex';
+            overlay.classList.replace('start', 'win')
+            h1.textContent = 'Great Job you win!';
+            this.resetGame()
+        }else{
+            overlay.style.display = 'flex';
+            overlay.classList.replace('start', 'lose')
+            h1.textContent = 'Sorry better luck next time. You Lose'
+            this.resetGame()
+        }
     }
 
 
     resetGame(){
         this.resetBtn()
         this.resetLiveHearts()
-        new Phrase().resetPhrase()
+        this.activePhrase.resetPhrase()
        
         
     }
@@ -101,13 +106,9 @@ class Game {
     }
 
     resetLiveHearts(){
-   
-        if(this.missed >= 5){
-            liveHearts.forEach(live =>{
-                live.src = 'images/liveHeart.png';
-            })
-       this.missed = 0
-        }
+        liveHearts.forEach(live =>{
+            live.src = 'images/liveHeart.png';
+        })
     }
 
 }
