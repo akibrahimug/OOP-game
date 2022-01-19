@@ -9,22 +9,19 @@ const keyboard = document.querySelectorAll('.key');
 const overlay = document.querySelector('#overlay');
 const h1 = overlay.querySelector('#game-over-message');
 const liveHearts = document.querySelectorAll('.tries img');
-
-
 const startBtn = document.querySelector('#btn__reset');
 
+let game;
 startBtn.addEventListener('click', e => {
-
-    const game = new Game();
-
+    game = new Game();
     game.startGame();
+})
 
-    keyboard.forEach(button => {
+keyboard.forEach(button => {
 
-        button.addEventListener('click', e => {
+    button.addEventListener('click', e => {
 
-            game.handleInteraction(button);
-        })
+        game.handleInteraction(button);
     })
 })
 

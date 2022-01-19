@@ -77,7 +77,7 @@ class Game {
     gameOver(){
         if(this.checkForWin()){
             overlay.style.display = 'flex';
-            overlay.classList.replace('start', 'win')
+            overlay.classList.replace("start", "win")
             h1.textContent = 'Great Job you win!';
             this.resetGame()
         }else{
