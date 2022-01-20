@@ -67,8 +67,9 @@ class Phrase {
 
     // Reset the phrase to hidden after the game is over
     resetPhrase(){
+        // Replace the Start text with Play Again text on the button
         startBtn.textContent = 'Play Again';
-
+        // Set the 'ul' variable to empty ready to recieve a new Phrase
         ul.textContent = '';
         
     }
