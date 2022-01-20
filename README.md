@@ -30,3 +30,4 @@ A player can guess a letter only once. After they’ve guessed a letter, the pro
 - If the selected letter is not in the phrase, one of the player's hearts in the scoreboard is changed from a "live" heart to a "lost" heart.
 
 - The player keeps choosing letters until they reveal all the letters in the phrase, or they make five incorrect guesses.
+### Try out the game here [Phrase Hunter](https://akibrahimug.github.io/OOP-game/)
